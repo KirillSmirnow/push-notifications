@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: push-notifications-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
+    hikari:
+      schema: push_notifications
+  jpa:
+    generate-ddl: true
+springdoc:
+  swagger-ui:
+    use-root-path: true
