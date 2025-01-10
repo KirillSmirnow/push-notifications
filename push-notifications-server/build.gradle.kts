@@ -15,6 +15,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.1")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.postgresql:postgresql")
+    implementation("com.google.firebase:firebase-admin:9.4.3")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
