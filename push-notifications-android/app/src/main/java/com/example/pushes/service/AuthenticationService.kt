@@ -8,6 +8,7 @@ import java.util.UUID.randomUUID
 class AuthenticationService(
     private val localStorage: LocalStorage,
     private val client: Client,
+    private val notificationService: NotificationService,
 ) {
 
     fun logIn() {
@@ -18,6 +19,7 @@ class AuthenticationService(
         val deviceId = "U${userId}D${randomUUID().toString().substring(0, 6)}"
         localStorage.putValue(Key.USER_ID, userId.toString())
         localStorage.putValue(Key.DEVICE_ID, deviceId)
+        notificationService.registerDeviceToken()
     }
 
     fun logOut() {

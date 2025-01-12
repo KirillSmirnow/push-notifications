@@ -5,16 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.pushes.client.MockClient
-import com.example.pushes.localstorage.InMemoryLocalStorage
-import com.example.pushes.service.AuthenticationService
 
 class MainActivity : Activity() {
 
-    private val authenticationService: AuthenticationService = AuthenticationService(
-        InMemoryLocalStorage(),
-        MockClient(),
-    )
+    private val authenticationService = ObjectFactory.authenticationService
+    private val notificationService = ObjectFactory.notificationService
 
     private lateinit var logInButton: Button
     private lateinit var logOutButton: Button
@@ -46,6 +41,13 @@ class MainActivity : Activity() {
             "User ID: ${authenticationService.getUserId() ?: "[Logged out]"}"
         findViewById<TextView>(R.id.deviceIdField).text =
             "Device ID: ${authenticationService.getDeviceId() ?: "[Logged out]"} "
+
+        val deviceTokenField = findViewById<TextView>(R.id.deviceTokenField)
+        deviceTokenField.text = "Fetching device token..."
+        notificationService.fetchDeviceToken { token ->
+            deviceTokenField.text = "Device Token: ${token.take(25)}..."
+        }
+
         logInButton.isEnabled = !authenticationService.isLoggedIn()
         logOutButton.isEnabled = authenticationService.isLoggedIn()
     }
