@@ -11,15 +11,17 @@ class AuthenticationService(
     private val notificationService: NotificationService,
 ) {
 
-    fun logIn() {
+    fun logIn(successCallback: () -> Unit) {
         if (isLoggedIn()) {
             throw IllegalStateException("Already logged in")
         }
-        val userId = client.getAnyUserId()
-        val deviceId = "U${userId}D${randomUUID().toString().substring(0, 6)}"
-        localStorage.putValue(Key.USER_ID, userId.toString())
-        localStorage.putValue(Key.DEVICE_ID, deviceId)
-        notificationService.registerDeviceToken()
+        client.getAnyUserId { userId ->
+            val deviceId = "U${userId}D${randomUUID().toString().substring(0, 6)}"
+            localStorage.putValue(Key.USER_ID, userId.toString())
+            localStorage.putValue(Key.DEVICE_ID, deviceId)
+            notificationService.registerDeviceToken()
+            successCallback()
+        }
     }
 
     fun logOut() {

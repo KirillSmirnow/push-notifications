@@ -6,6 +6,7 @@
         android:allowBackup="true"
         android:label="Pushes"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"

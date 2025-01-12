@@ -22,9 +22,10 @@ class MainActivity : Activity() {
         logOutButton = findViewById(R.id.logOutButton)
 
         logInButton.setOnClickListener {
-            authenticationService.logIn()
-            displayMessage("Logged in")
-            refresh()
+            authenticationService.logIn {
+                displayMessage("Logged in")
+                refresh()
+            }
         }
 
         logOutButton.setOnClickListener {
@@ -36,7 +37,7 @@ class MainActivity : Activity() {
         refresh()
     }
 
-    private fun refresh() {
+    private fun refresh() = runOnUiThread {
         findViewById<TextView>(R.id.userIdField).text =
             "User ID: ${authenticationService.getUserId() ?: "[Logged out]"}"
         findViewById<TextView>(R.id.deviceIdField).text =
@@ -52,7 +53,7 @@ class MainActivity : Activity() {
         logOutButton.isEnabled = authenticationService.isLoggedIn()
     }
 
-    private fun displayMessage(text: String) {
+    private fun displayMessage(text: String) = runOnUiThread {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 }
