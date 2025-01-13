@@ -30,6 +30,7 @@ class AuthenticationService(
         }
         val deviceId = localStorage.getValue(Key.DEVICE_ID)
         localStorage.clean()
+        notificationService.removeDeviceToken()
         if (deviceId != null) {
             client.removeDeviceToken(deviceId)
         }

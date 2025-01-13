@@ -23,4 +23,8 @@ class NotificationService(
             }
         }
     }
+
+    fun removeDeviceToken() {
+        FirebaseMessaging.getInstance().deleteToken()
+    }
 }
